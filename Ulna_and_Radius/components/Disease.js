@@ -7,23 +7,15 @@ import Animated, {
   withTiming,
   withSequence,
 } from 'react-native-reanimated';
-import {Howl} from 'howler';
 import ErrorSound from '../assets/lose.mp3';
 import SuccessSound from '../assets/win.mp3';
 import Big from '../assets/big.mp3';
+import Sound from 'react-native-sound';
+Sound.setCategory('Playback');
 
-var Error = new Howl({
-  src: [ErrorSound],
-  volume: 1.0,
-});
-var Success = new Howl({
-  src: [SuccessSound],
-  volume: 0.1,
-});
-var BigSound = new Howl({
-  src: [Big],
-  volume: 1.0,
-});
+var Error = new Sound(ErrorSound, () => {});
+var Success = new Sound(SuccessSound, () => {});
+var BigSound = new Sound(Big, () => {});
 
 const Disease = React.forwardRef(
   (
