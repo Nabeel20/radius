@@ -1,4 +1,4 @@
-package com.ulanandradius.newarchitecture;
+package com.UlnaAndRadius.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.ulanandradius.BuildConfig;
-import com.ulanandradius.newarchitecture.components.MainComponentsRegistry;
-import com.ulanandradius.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.UlnaAndRadius.BuildConfig;
+import com.UlnaAndRadius.newarchitecture.components.MainComponentsRegistry;
+import com.UlnaAndRadius.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

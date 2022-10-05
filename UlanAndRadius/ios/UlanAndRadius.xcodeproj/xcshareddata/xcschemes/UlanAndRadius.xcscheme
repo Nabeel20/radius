@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "UlanAndRadius.app"
-               BlueprintName = "UlanAndRadius"
-               ReferencedContainer = "container:UlanAndRadius.xcodeproj">
+               BuildableName = "UlnaAndRadius.app"
+               BlueprintName = "UlnaAndRadius"
+               ReferencedContainer = "container:UlnaAndRadius.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "UlanAndRadiusTests.xctest"
-               BlueprintName = "UlanAndRadiusTests"
-               ReferencedContainer = "container:UlanAndRadius.xcodeproj">
+               BuildableName = "UlnaAndRadiusTests.xctest"
+               BlueprintName = "UlnaAndRadiusTests"
+               ReferencedContainer = "container:UlnaAndRadius.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "UlanAndRadius.app"
-            BlueprintName = "UlanAndRadius"
-            ReferencedContainer = "container:UlanAndRadius.xcodeproj">
+            BuildableName = "UlnaAndRadius.app"
+            BlueprintName = "UlnaAndRadius"
+            ReferencedContainer = "container:UlnaAndRadius.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "UlanAndRadius.app"
-            BlueprintName = "UlanAndRadius"
-            ReferencedContainer = "container:UlanAndRadius.xcodeproj">
+            BuildableName = "UlnaAndRadius.app"
+            BlueprintName = "UlnaAndRadius"
+            ReferencedContainer = "container:UlnaAndRadius.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
