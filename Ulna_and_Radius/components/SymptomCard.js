@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DBE2EF',
   },
   text: {
-    fontFamily: 'IBM Plex Sans Arabic',
+    fontFamily: 'IBM-medium',
     fontSize: 24,
     fontWeight: '500',
   },

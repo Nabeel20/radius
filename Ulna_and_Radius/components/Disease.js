@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   text: {
-    fontFamily: 'IBM Plex Sans Arabic',
+    fontFamily: 'IBM-bold',
     fontSize: 32,
     fontWeight: 'bold',
     position: 'absolute',
@@ -162,9 +162,8 @@ const styles = StyleSheet.create({
     textShadowColor: '#FBF7F4',
   },
   number: {
-    fontFamily: 'Space Mono',
+    fontFamily: 'SpaceMono',
     fontSize: 72,
-    fontWeight: 600,
     position: 'absolute',
     zIndex: -1,
   },
