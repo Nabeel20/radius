@@ -108,6 +108,7 @@ export default function () {
     }
   }
   function dragEventHandler(pointer) {
+    'worklet';
     if (excluded_coordinates.current.length === y_coordinates.current.size) {
       return symptomButton.current.resetPosition();
     }
