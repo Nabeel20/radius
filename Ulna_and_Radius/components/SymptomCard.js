@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     fontFamily: 'IBM-medium',
     fontSize: 24,
     fontWeight: '500',
+    color: '#212121',
   },
 });
 

@@ -191,15 +191,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBF7F4',
   },
   score: {
-    fontFamily: 'IBM Plex Sans Arabic',
+    fontFamily: 'IBM-bold',
+    color: '#212121',
     fontSize: 32,
     fontWeight: 'bold',
     margin: 8,
     alignSelf: 'flex-end',
   },
   point: {
-    fontFamily: 'IBM Plex Sans Arabic',
+    fontFamily: 'IBM-medium',
     fontSize: 24,
+    color: '#212121',
   },
   footer: {
     height: 80,
@@ -221,19 +223,3 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 });
-
-/*
-
-
-      <View
-        style={{
-          width: 10,
-          height: 10,
-          backgroundColor: 'red',
-          position: 'absolute',
-          top,
-        }}
-      ></View>
-
-
-      */

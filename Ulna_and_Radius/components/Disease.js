@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     position: 'absolute',
     right: 16,
-    color: 'black',
+    color: '#212121',
     textShadowOffset: {width: 0, height: 3},
     textShadowColor: '#FBF7F4',
   },
