@@ -152,12 +152,11 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   text: {
-    fontFamily: 'IBM-bold',
     fontSize: 32,
-    fontWeight: 'bold',
     position: 'absolute',
     right: 16,
     color: '#212121',
+    fontFamily: 'IBM-medium',
     textShadowOffset: {width: 0, height: 3},
     textShadowColor: '#FBF7F4',
   },
