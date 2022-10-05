@@ -1,17 +1,17 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Game from './Game';
 
 export default function App() {
   return (
-    <View style={styles.main}>
+    <GestureHandlerRootView style={styles.main}>
       <Game />
-    </View>
+    </GestureHandlerRootView>
   );
 }
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    height: '100%',
   },
 });
