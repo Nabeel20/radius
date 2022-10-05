@@ -1,0 +1,29 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/big.mp3",
+      "sha1": "eee2538b8291df826c74fa0037afd9dfa855df0d"
+    },
+    {
+      "path": "assets/fonts/IBM-bold.ttf",
+      "sha1": "cb04c8d7dea87049b9de13524547bba6336dafcc"
+    },
+    {
+      "path": "assets/fonts/IBM-medium.ttf",
+      "sha1": "739029bf018cb24106b885d6f17fb404dd658910"
+    },
+    {
+      "path": "assets/fonts/SpaceMono.ttf",
+      "sha1": "91bc9576b93d1a2ffc75da19665a3b8b654f5d40"
+    },
+    {
+      "path": "assets/lose.mp3",
+      "sha1": "7055e4aca0ddc899f7a4494f30322b754f3bf6c2"
+    },
+    {
+      "path": "assets/win.mp3",
+      "sha1": "ac0ed9e3d532e42cf630e2d05027e211feb1092f"
+    }
+  ]
+}
