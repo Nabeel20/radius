@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
     fontFamily: 'IBM-medium',
     textShadowOffset: {width: 0, height: 3},
     textShadowColor: '#FBF7F4',
+    textShadowRadius: 1,
   },
   number: {
     fontFamily: 'SpaceMono',
