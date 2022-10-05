@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import Disease from './components/Disease';
 import SymptomCard from './components/SymptomCard';
 
@@ -73,11 +73,11 @@ export default function () {
 
   function updateMainSymptom() {
     let temp_symptoms_store = [];
-    diseases_refs.current.forEach((item) =>
-      temp_symptoms_store.push(item.getNextSymptom())
+    diseases_refs.current.forEach(item =>
+      temp_symptoms_store.push(item.getNextSymptom()),
     );
     temp_symptoms_store = shuffle(
-      temp_symptoms_store.flat().filter((item) => item !== undefined)
+      temp_symptoms_store.flat().filter(item => item !== undefined),
     );
     if (temp_symptoms_store.length == 0) {
       mainSymptom = 'done';
@@ -129,13 +129,13 @@ export default function () {
           }
           updateDisease(index);
           updateMainSymptom();
-          setScore((prev) => (prev += 200));
+          setScore(prev => (prev += 200));
           return;
         }
         if (status) {
           updateMainSymptom();
           symptomButton.current.resetPosition();
-          setScore((prev) => (prev += 50));
+          setScore(prev => (prev += 50));
         } else {
           showHint();
           diseases_refs.current.get(index).playError();
@@ -167,8 +167,8 @@ export default function () {
               symptoms={item.symptoms}
               color={item.color}
               index={index}
-              onLayout={(y) => y_coordinates.current.set(index, y)}
-              ref={(ref) => diseases_refs.current.set(index, ref)}
+              onLayout={y => y_coordinates.current.set(index, y)}
+              ref={ref => diseases_refs.current.set(index, ref)}
               key={item.id}
             />
           );
