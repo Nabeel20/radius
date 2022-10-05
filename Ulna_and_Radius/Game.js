@@ -79,7 +79,7 @@ export default function () {
     temp_symptoms_store = shuffle(
       temp_symptoms_store.flat().filter(item => item !== undefined),
     );
-    if (temp_symptoms_store.length == 0) {
+    if (temp_symptoms_store.length === 0) {
       mainSymptom = 'done';
       return symptomButton.current.updateText(mainSymptom);
     }
