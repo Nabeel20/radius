@@ -63,7 +63,8 @@ let indexes = [0, 1, 2, 3];
 indexes = shuffle(indexes);
 let symptoms = output[indexes[0]].symptoms;
 symptoms = shuffle(symptoms);
-let mainSymptom = symptoms[0];
+let mainSymptom = 'main symptom';
+mainSymptom = symptoms[0];
 
 export default function () {
   const {width, height} = useWindowDimensions();
