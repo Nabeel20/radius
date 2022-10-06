@@ -6,7 +6,7 @@ import {
   useWindowDimensions,
   ToastAndroid,
 } from 'react-native';
-import {runOnUI} from 'react-native-reanimated';
+import {runOnJS} from 'react-native-reanimated';
 import Disease from './components/Disease';
 import SymptomCard from './components/SymptomCard';
 import Timer from './components/Timer';
@@ -77,7 +77,7 @@ export default function () {
   const {width, height} = useWindowDimensions();
   const [score, setScore] = React.useState(0);
   const diseases_refs = React.useRef(new Map());
-  const symptomButton = React.useRef(undefined);
+  const symptomButton = React.useRef(null);
   const y_coordinates = React.useRef(new Map());
   const excluded_coordinates = React.useRef([]);
   const [loading, setLoading] = React.useState(true);
@@ -124,7 +124,6 @@ export default function () {
     }
   }
   function dragEventHandler(pointer) {
-    'worklet';
     try {
       if (excluded_coordinates.current.length === y_coordinates.current.size) {
         return symptomButton.current.resetPosition();
@@ -224,7 +223,7 @@ export default function () {
       <View style={styles.footer}>
         <SymptomCard
           ref={symptomButton}
-          onDragEnd={pointer => runOnUI(dragEventHandler)(pointer)}
+          onDragEnd={pointer => runOnJS(dragEventHandler)(pointer)}
           text={mainSymptom}
         />
       </View>
