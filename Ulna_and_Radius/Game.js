@@ -2,6 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Text, useWindowDimensions} from 'react-native';
 import Disease from './components/Disease';
 import SymptomCard from './components/SymptomCard';
+import Timer from './components/Timer';
 
 const HEADER_HEIGHT = 70;
 const CARD_HEIGHT = 100;
@@ -161,9 +162,7 @@ export default function () {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.score} onPress={() => symptomButton.current.test()}>
-          00:70
-        </Text>
+        <Timer />
 
         <Text style={styles.point}>
           <Text style={styles.score}>{score}</Text>نقطة
