@@ -77,9 +77,15 @@ export default function () {
   const {width, height} = useWindowDimensions();
   const [score, setScore] = React.useState(0);
   const diseases_refs = React.useRef(new Map());
-  const symptomButton = React.useRef(null);
+  const symptomButton = React.useRef(undefined);
   const y_coordinates = React.useRef(new Map());
   const excluded_coordinates = React.useRef([]);
+  const [loading, setLoading] = React.useState(true);
+  React.useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
 
   function updateMainSymptom() {
     let temp_symptoms_store = [];
@@ -172,6 +178,13 @@ export default function () {
         <Text style={styles.landscapeText}>
           من فضلك قم بتدوير الجهاز للوضعية الشاقولية
         </Text>
+      </View>
+    );
+  }
+  if (loading) {
+    return (
+      <View style={styles.landscape}>
+        <Text style={styles.landscapeText}>جار التحميل</Text>
       </View>
     );
   }
