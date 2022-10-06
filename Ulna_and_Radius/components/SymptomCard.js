@@ -51,6 +51,7 @@ const SymptomCard = React.forwardRef(
 
     return (
       <Animated.View
+        ref={ref}
         onLayout={({nativeEvent: {layout}}) => {
           originY.value = layout.top;
         }}>

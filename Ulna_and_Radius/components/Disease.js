@@ -119,6 +119,7 @@ const Disease = React.forwardRef(
 
     return (
       <Animated.View
+        ref={ref}
         pointerEvents="none"
         style={[styles.box, container_animation]}
         onLayout={({nativeEvent: {layout}}) => {
