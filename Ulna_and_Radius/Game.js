@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   ToastAndroid,
 } from 'react-native';
+import {runOnUI} from 'react-native-reanimated';
 import Disease from './components/Disease';
 import SymptomCard from './components/SymptomCard';
 import Timer from './components/Timer';
@@ -210,7 +211,7 @@ export default function () {
       <View style={styles.footer}>
         <SymptomCard
           ref={symptomButton}
-          onDragEnd={dragEventHandler}
+          onDragEnd={pointer => runOnUI(dragEventHandler)(pointer)}
           text={mainSymptom}
         />
       </View>
