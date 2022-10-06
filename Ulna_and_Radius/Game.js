@@ -111,44 +111,46 @@ export default function () {
   }
   function dragEventHandler(pointer) {
     'worklet';
-    if (excluded_coordinates.current.length === y_coordinates.current.size) {
-      return symptomButton.current.resetPosition();
-    }
-    for (let index = 0; index < y_coordinates.current.size; index++) {
-      if (excluded_coordinates.current.includes(index)) {
-        continue;
+    try {
+      if (excluded_coordinates.current.length === y_coordinates.current.size) {
+        return symptomButton.current.resetPosition();
       }
-      const top_border = y_coordinates.current.get(index);
+      for (let index = 0; index < y_coordinates.current.size; index++) {
+        if (excluded_coordinates.current.includes(index)) {
+          continue;
+        }
+        const top_border = y_coordinates.current.get(index);
 
-      if (
-        pointer >= top_border + HEADER_HEIGHT &&
-        pointer <= top_border + HEADER_HEIGHT + CARD_HEIGHT
-      ) {
-        let status = diseases_refs.current.get(index).check(mainSymptom);
-        if (status === 'finished') {
-          symptomButton.current.resetPosition();
-          if (data[0] === undefined) {
-            return handleDeadEnd(index);
+        if (
+          pointer >= top_border + HEADER_HEIGHT &&
+          pointer <= top_border + HEADER_HEIGHT + CARD_HEIGHT
+        ) {
+          let status = diseases_refs.current.get(index).check(mainSymptom);
+          if (status === 'finished') {
+            symptomButton.current.resetPosition();
+            if (data[0] === undefined) {
+              return handleDeadEnd(index);
+            }
+            updateDisease(index);
+            updateMainSymptom();
+            setScore(prev => (prev += 200));
+            return;
           }
-          updateDisease(index);
-          updateMainSymptom();
-          setScore(prev => (prev += 200));
-          return;
-        }
-        if (status) {
-          updateMainSymptom();
-          symptomButton.current.resetPosition();
-          setScore(prev => (prev += 50));
+          if (status) {
+            updateMainSymptom();
+            symptomButton.current.resetPosition();
+            setScore(prev => (prev += 50));
+          } else {
+            showHint();
+            diseases_refs.current.get(index).playError();
+            symptomButton.current.resetPosition();
+          }
+          break;
         } else {
-          showHint();
-          diseases_refs.current.get(index).playError();
           symptomButton.current.resetPosition();
         }
-        break;
-      } else {
-        symptomButton.current.resetPosition();
       }
-    }
+    } catch (error) {}
   }
   if (width > height) {
     return (
