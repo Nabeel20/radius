@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, useWindowDimensions} from 'react-native';
 import Disease from './components/Disease';
 import SymptomCard from './components/SymptomCard';
 
@@ -35,7 +35,7 @@ let data = [
   },
   {
     id: '4-d',
-    disease: ' انخفاض سكر الدم',
+    disease: 'انخفاض سكر الدم',
     color: '#1BBA5F',
 
     symptoms: ['سكر1', 'سكر2', 'سكر3', 'سكر4'],
@@ -65,6 +65,7 @@ symptoms = shuffle(symptoms);
 let mainSymptom = symptoms[0];
 
 export default function () {
+  const {width, height} = useWindowDimensions();
   const [score, setScore] = React.useState(0);
   const diseases_refs = React.useRef(new Map());
   const symptomButton = React.useRef(null);
@@ -148,7 +149,15 @@ export default function () {
       }
     }
   }
-
+  if (width > height) {
+    return (
+      <View style={styles.landscape}>
+        <Text style={styles.landscapeText}>
+          من فضلك قم بتدوير الجهاز للوضعية الشاقولية
+        </Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -222,5 +231,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     padding: 16,
+  },
+  landscape: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FBF7F4',
+  },
+  landscapeText: {
+    fontFamily: 'IBM-bold',
+    textAlign: 'center',
+    fontSize: 32,
+    color: '#212121',
   },
 });
