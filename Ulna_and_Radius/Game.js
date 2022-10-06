@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Text, useWindowDimensions} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  ToastAndroid,
+} from 'react-native';
 import Disease from './components/Disease';
 import SymptomCard from './components/SymptomCard';
 import Timer from './components/Timer';
@@ -64,7 +70,7 @@ indexes = shuffle(indexes);
 let symptoms = output[indexes[0]].symptoms;
 symptoms = shuffle(symptoms);
 let mainSymptom = 'main symptom';
-mainSymptom = symptoms[0];
+mainSymptom = symptoms[0] ?? 'main';
 
 export default function () {
   const {width, height} = useWindowDimensions();
@@ -151,7 +157,13 @@ export default function () {
           symptomButton.current.resetPosition();
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      ToastAndroid.showWithGravity(
+        `Error: ${error.toString()}`,
+        ToastAndroid.LONG,
+        ToastAndroid.TOP,
+      );
+    }
   }
   if (width > height) {
     return (
@@ -165,7 +177,16 @@ export default function () {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Timer />
+        <Timer
+          targetMinutes={3}
+          report_finish={() =>
+            ToastAndroid.showWithGravity(
+              'Game over',
+              ToastAndroid.LONG,
+              ToastAndroid.CENTER,
+            )
+          }
+        />
 
         <Text style={styles.point}>
           <Text style={styles.score}>{score}</Text>نقطة
