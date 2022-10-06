@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
     borderColor: '#212121',
     backgroundColor: '#FBF7F4',
     marginBottom: 24,
-    padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -166,6 +165,7 @@ const styles = StyleSheet.create({
     fontSize: 72,
     position: 'absolute',
     zIndex: -1,
+    left: 16,
   },
 });
 
