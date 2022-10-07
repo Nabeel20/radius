@@ -5,13 +5,13 @@ import Animated, {
   useSharedValue,
   useAnimatedGestureHandler,
   withSpring,
+  runOnJS,
 } from 'react-native-reanimated';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 
 const SymptomCard = React.forwardRef(
   ({text = 'Symptom', onDragEnd = () => {}}, ref) => {
     const pressed = useSharedValue(false);
-    const originY = useSharedValue(0);
     const x = useSharedValue(0);
     const y = useSharedValue(0);
     const [localText, setLocalText] = useState(text);
@@ -25,7 +25,9 @@ const SymptomCard = React.forwardRef(
         setLocalText(new_text);
       },
     }));
-
+    const warper = point => {
+      onDragEnd(point);
+    };
     const eventHandler = useAnimatedGestureHandler({
       onStart: () => {
         pressed.value = true;
@@ -35,10 +37,8 @@ const SymptomCard = React.forwardRef(
         y.value = event.translationY;
       },
       onEnd: event => {
-        const touch_position = Math.floor(
-          originY.value - Math.abs(event.translationY),
-        );
-        onDragEnd(touch_position);
+        'worklet';
+        runOnJS(warper)(Math.abs(event.translationY));
         pressed.value = false;
       },
     });
@@ -50,11 +50,7 @@ const SymptomCard = React.forwardRef(
     });
 
     return (
-      <Animated.View
-        ref={ref}
-        onLayout={({nativeEvent: {layout}}) => {
-          originY.value = layout.top;
-        }}>
+      <Animated.View ref={ref}>
         <PanGestureHandler onGestureEvent={eventHandler}>
           <Animated.View style={[styles.box, animated_touch]}>
             <Text style={styles.text}>{localText}</Text>
@@ -79,7 +75,6 @@ const styles = StyleSheet.create({
     marginTop: -30,
     backgroundColor: '#FBF7F4',
     alignItems: 'center',
-    flex: 1,
     alignSelf: 'center',
   },
   shadow: {
