@@ -42,5 +42,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     margin: 8,
     alignSelf: 'flex-end',
+    color: '#212121',
   },
 });
