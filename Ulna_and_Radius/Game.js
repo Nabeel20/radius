@@ -80,12 +80,7 @@ export default function () {
   const symptomButton = React.useRef(null);
   const y_coordinates = React.useRef(new Map());
   const excluded_coordinates = React.useRef([]);
-  const [loading, setLoading] = React.useState(true);
-  React.useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
+  const footer = React.useRef(0);
 
   function updateMainSymptom() {
     let temp_symptoms_store = [];
@@ -133,10 +128,10 @@ export default function () {
           continue;
         }
         const top_border = y_coordinates.current.get(index);
-
+        const pointer_actual_position = footer.current - pointer;
         if (
-          pointer >= top_border + HEADER_HEIGHT &&
-          pointer <= top_border + HEADER_HEIGHT + CARD_HEIGHT
+          pointer_actual_position >= top_border + HEADER_HEIGHT &&
+          pointer_actual_position <= top_border + HEADER_HEIGHT + CARD_HEIGHT
         ) {
           let status = diseases_refs.current.get(index).check(mainSymptom);
           if (status === 'finished') {
@@ -180,13 +175,7 @@ export default function () {
       </View>
     );
   }
-  if (loading) {
-    return (
-      <View style={styles.landscape}>
-        <Text style={styles.landscapeText}>جار التحميل</Text>
-      </View>
-    );
-  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -220,10 +209,14 @@ export default function () {
           );
         })}
       </View>
-      <View style={styles.footer}>
+      <View
+        style={styles.footer}
+        onLayout={({nativeEvent: {layout}}) => {
+          footer.current = layout.y - 30;
+        }}>
         <SymptomCard
           ref={symptomButton}
-          onDragEnd={pointer => runOnJS(dragEventHandler)(pointer)}
+          onDragEnd={dragEventHandler}
           text={mainSymptom}
         />
       </View>
