@@ -253,8 +253,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderColor: '#212121',
     borderBottomWidth: 4,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   tray: {
