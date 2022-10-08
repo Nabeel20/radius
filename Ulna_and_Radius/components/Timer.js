@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {StyleSheet, Text} from 'react-native';
 
-export default function Timer({targetMinutes = 0, report_finish = () => {}}) {
+export default function Timer({targetMinutes = 0, onFinish = () => {}}) {
   const countDownDate = useRef(new Date());
   const [countDown, setCountDown] = useState(0);
 
@@ -11,7 +11,7 @@ export default function Timer({targetMinutes = 0, report_finish = () => {}}) {
     );
     const interval = setInterval(() => {
       if (countDownDate.current.getTime() - new Date().getTime() < 500) {
-        report_finish();
+        onFinish();
         return clearInterval(interval);
       }
       setCountDown(countDownDate.current.getTime() - new Date().getTime());

@@ -183,7 +183,7 @@ export default function () {
       <View style={styles.header}>
         <Timer
           targetMinutes={3}
-          report_finish={() =>
+          onFinish={() =>
             ToastAndroid.showWithGravity(
               'Game over',
               ToastAndroid.LONG,
