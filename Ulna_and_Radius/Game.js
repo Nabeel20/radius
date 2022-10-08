@@ -6,7 +6,6 @@ import {
   useWindowDimensions,
   ToastAndroid,
 } from 'react-native';
-import {runOnJS} from 'react-native-reanimated';
 import Disease from './components/Disease';
 import SymptomCard from './components/SymptomCard';
 import Timer from './components/Timer';
