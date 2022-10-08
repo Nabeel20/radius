@@ -12,6 +12,8 @@ import Timer from './components/Timer';
 
 const HEADER_HEIGHT = 70;
 const CARD_HEIGHT = 100;
+const POINTER_MARGIN = 20;
+
 function shuffle(arr) {
   let i = arr.length;
   while (--i > 0) {
@@ -127,7 +129,8 @@ export default function () {
           continue;
         }
         const top_border = y_coordinates.current.get(index);
-        const pointer_actual_position = footer.current - pointer;
+        const pointer_actual_position =
+          footer.current - pointer + POINTER_MARGIN;
         if (
           pointer_actual_position >= top_border + HEADER_HEIGHT &&
           pointer_actual_position <= top_border + HEADER_HEIGHT + CARD_HEIGHT
