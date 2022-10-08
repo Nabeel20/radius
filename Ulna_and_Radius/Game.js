@@ -10,7 +10,7 @@ import Disease from './components/Disease';
 import SymptomCard from './components/SymptomCard';
 import Timer from './components/Timer';
 
-const HEADER_HEIGHT = 70;
+const HEADER_HEIGHT = 50;
 const CARD_HEIGHT = 100;
 const POINTER_MARGIN = 20;
 
@@ -245,12 +245,12 @@ const styles = StyleSheet.create({
     color: '#212121',
   },
   footer: {
-    height: 80,
+    height: 50,
     borderTopWidth: 4,
     borderColor: 'black',
   },
   header: {
-    height: 70,
+    height: 50,
     borderColor: '#212121',
     borderBottomWidth: 4,
     flexDirection: 'row',
