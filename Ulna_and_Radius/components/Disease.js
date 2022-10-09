@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import {StyleSheet, Text} from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -36,7 +36,7 @@ const Disease = React.forwardRef(
     const [localDisease, setLocalDisease] = React.useState(disease);
     const [localSymptoms, setLocalSymptoms] = React.useState(symptoms);
     const [localColor, setLocalColor] = React.useState(color);
-    const symptoms_store = useRef(symptoms);
+    const symptoms_store = useRef([]);
 
     React.useImperativeHandle(ref, () => ({
       playError() {
@@ -62,10 +62,17 @@ const Disease = React.forwardRef(
         Success.play();
         return true;
       },
-      update(new_text, new_symptoms, new_color) {
-        setLocalDisease(new_text);
-        setLocalSymptoms(new_symptoms);
-        setLocalColor(new_color);
+      init(updateData) {
+        setLocalDisease(updateData.disease);
+        setLocalSymptoms(updateData.symptoms);
+        setLocalColor(updateData.color);
+        symptoms_store.current = updateData.symptoms;
+        opacity_animation.value = withSequence(
+          withTiming(0, {duration: 0}),
+          withTiming(1, {
+            duration: index * 450 + 350,
+          }),
+        );
         setDone(0);
       },
       flashRight() {
@@ -109,13 +116,6 @@ const Disease = React.forwardRef(
         opacity: correct_animation.value,
       };
     });
-    useEffect(() => {
-      opacity_animation.value = withTiming(1, {duration: index * 450 + 350});
-      scale_animation.value = withTiming(1, {
-        duration: index * 500,
-      });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
       <Animated.View
