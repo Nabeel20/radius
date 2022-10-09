@@ -52,8 +52,8 @@ export default function () {
       const ItemSymptoms = item.getCurrentSymptoms();
       symptoms.push(ItemSymptoms);
     });
-    symptoms = shuffle(symptoms.flat().filter(item => item !== undefined));
-    if (symptoms.length === 0) {
+    symptoms = symptoms.flat().filter(item => item !== undefined);
+    if (shuffle(symptoms).length === 0) {
       return button.updateText('done');
     }
     const newSymptom = symptoms[0];
