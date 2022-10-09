@@ -70,10 +70,12 @@ export default function () {
     excluded_coordinates.current = [...excluded_coordinates.current, index];
   }
   function showHint() {
-    for (let i = 0; i < diseases_refs.current.size; i++) {
-      const element = diseases_refs.current.get(i).getSymptoms();
-      if (element.includes(symptomButton.current.getText())) {
-        diseases_refs.current.get(i).flashRight();
+    const cards = diseases_refs.current;
+    const buttonText = symptomButton.current.getText();
+    for (let i = 0; i < cards.size; i++) {
+      const cardSymptoms = cards.get(i).getSymptoms();
+      if (cardSymptoms.includes(buttonText)) {
+        cards.get(i).flashRight();
         break;
       }
     }
