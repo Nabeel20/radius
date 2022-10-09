@@ -4,7 +4,6 @@ import Disease from './components/Disease';
 import SymptomCard from './components/SymptomCard';
 import Timer from './components/Timer';
 import {data as Database} from './components/database';
-import FinishModal from './components/FinishModal';
 const HEADER_HEIGHT = 50;
 const CARD_HEIGHT = 100;
 
@@ -141,10 +140,9 @@ export default function () {
 
   return (
     <View style={styles.container}>
-      <FinishModal visible={false} />
       <Text onPress={getDataOnInit}>new Game</Text>
       <View style={styles.header}>
-        <Timer targetMinutes={1} onFinish={() => getDataOnInit()} />
+        <Timer targetMinutes={3} onFinish={() => null} />
       </View>
       <View style={styles.tray}>
         {[0, 1, 2, 4].map((item, index) => {
