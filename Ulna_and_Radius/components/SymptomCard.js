@@ -24,6 +24,9 @@ const SymptomCard = React.forwardRef(
       updateText(new_text) {
         setLocalText(new_text);
       },
+      getText() {
+        return localText;
+      },
     }));
     const warper = point => {
       onDragEnd(point);
