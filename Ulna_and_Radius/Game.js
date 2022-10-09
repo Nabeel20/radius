@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  ToastAndroid,
-  Modal,
-} from 'react-native';
+import {View, StyleSheet, Text, useWindowDimensions} from 'react-native';
 import Disease from './components/Disease';
 import SymptomCard from './components/SymptomCard';
 import Timer from './components/Timer';
@@ -31,7 +24,7 @@ export default function () {
   const y_coordinates = React.useRef(new Map());
   const excluded_coordinates = React.useRef([]);
   const footer = React.useRef(0);
-  const [finishModal, setFinishModal] = React.useState(false);
+  //const [finishModal, setFinishModal] = React.useState(false);
   const data = React.useRef([]);
 
   function getDataOnInit() {
@@ -52,17 +45,19 @@ export default function () {
   }, []);
 
   function updateSymptomButtonText() {
-    let temp_symptoms_store = [];
-    diseases_refs.current.forEach(item =>
-      temp_symptoms_store.push(item.getNextSymptom()),
-    );
-    temp_symptoms_store = shuffle(
-      temp_symptoms_store.flat().filter(item => item !== undefined),
-    );
-    if (temp_symptoms_store.length === 0) {
-      return symptomButton.current.updateText('done');
+    const cards = diseases_refs.current;
+    const button = symptomButton.current;
+    let symptoms = [];
+    cards.forEach(item => {
+      const ItemSymptoms = item.getNextSymptom();
+      symptoms.push(ItemSymptoms);
+    });
+    symptoms = shuffle(symptoms.flat().filter(item => item !== undefined));
+    if (symptoms.length === 0) {
+      return button.updateText('done');
     }
-    symptomButton.current.updateText(temp_symptoms_store[0]);
+    const newSymptom = symptoms[0];
+    button.updateText(newSymptom);
   }
   function newDiseaseCard(index) {
     const new_disease = data.current[0];
