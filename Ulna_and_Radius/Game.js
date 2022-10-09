@@ -33,10 +33,6 @@ export default function () {
   const footer = React.useRef(0);
   const [finishModal, setFinishModal] = React.useState(false);
   const data = React.useRef([]);
-  const [loading, setLoading] = React.useState(true);
-
-  //! debug value
-  const [top, setTop] = React.useState(0);
 
   function getDataOnInit() {
     let _data = shuffle(Database);
@@ -50,7 +46,6 @@ export default function () {
       item.init(output[index]);
     });
     data.current = _data;
-    setLoading(false);
   }
   React.useLayoutEffect(() => {
     getDataOnInit();
@@ -103,8 +98,6 @@ export default function () {
         }
         const top_border = y_cord.get(index);
         const pointer_actual_position = footer.current - pointer;
-        setTop(pointer_actual_position);
-
         if (
           pointer_actual_position >= top_border + HEADER_HEIGHT &&
           pointer_actual_position <= top_border + HEADER_HEIGHT + CARD_HEIGHT
@@ -151,9 +144,6 @@ export default function () {
 
   return (
     <View style={styles.container}>
-      <Modal visible={loading} style={styles.landscape}>
-        <Text style={styles.landscapeText}>loading....</Text>
-      </Modal>
       <FinishModal visible={false} />
       <Text onPress={getDataOnInit}>new Game</Text>
       <View style={styles.header}>
