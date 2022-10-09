@@ -14,7 +14,6 @@ import {data as Database} from './components/database';
 import FinishModal from './components/FinishModal';
 const HEADER_HEIGHT = 50;
 const CARD_HEIGHT = 100;
-const POINTER_MARGIN = 20;
 
 function shuffle(arr) {
   let i = arr.length;
@@ -57,7 +56,7 @@ export default function () {
     getDataOnInit();
   }, []);
 
-  function updateMainSymptom() {
+  function updateSymptomButtonText() {
     let temp_symptoms_store = [];
     diseases_refs.current.forEach(item =>
       temp_symptoms_store.push(item.getNextSymptom()),
@@ -70,12 +69,13 @@ export default function () {
     }
     symptomButton.current.updateText(temp_symptoms_store[0]);
   }
-  function updateDisease(index) {
-    diseases_refs.current.get(index).init(data.current[0]);
+  function newDiseaseCard(index) {
+    const new_disease = data.current[0];
+    diseases_refs.current.get(index).init(new_disease);
     data.current = data.current.shift();
   }
   function handleDeadEnd(index) {
-    updateMainSymptom();
+    updateSymptomButtonText();
     diseases_refs.current.get(index).hide();
     excluded_coordinates.current = [...excluded_coordinates.current, index];
   }
@@ -89,46 +89,49 @@ export default function () {
     }
   }
   function dragEventHandler(pointer) {
+    const excluded_cord = excluded_coordinates.current;
+    const y_cord = y_coordinates.current;
+    const cards = diseases_refs.current;
+    const button = symptomButton.current;
     try {
-      if (excluded_coordinates.current.length === y_coordinates.current.size) {
-        return symptomButton.current.resetPosition();
+      if (excluded_cord.length === y_cord.size) {
+        return button.resetPosition();
       }
-      for (let index = 0; index < y_coordinates.current.size; index++) {
-        if (excluded_coordinates.current.includes(index)) {
+      for (let index = 0; index < y_cord.size; index++) {
+        if (excluded_cord.includes(index)) {
           continue;
         }
-        const top_border = y_coordinates.current.get(index);
-        const pointer_actual_position =
-          footer.current - pointer + POINTER_MARGIN;
+        const top_border = y_cord.get(index);
+        const pointer_actual_position = footer.current - pointer;
         setTop(pointer_actual_position);
 
         if (
           pointer_actual_position >= top_border + HEADER_HEIGHT &&
           pointer_actual_position <= top_border + HEADER_HEIGHT + CARD_HEIGHT
         ) {
-          let status = diseases_refs.current
-            .get(index)
-            .check(symptomButton.current.getText());
+          const buttonText = button.getText();
+          let status = cards.get(index).check(buttonText);
+
           if (status === 'finished') {
-            symptomButton.current.resetPosition();
+            button.resetPosition();
             if (data.current[0] === undefined) {
               return handleDeadEnd(index);
             }
-            updateDisease(index);
-            updateMainSymptom();
+            newDiseaseCard(index);
+            updateSymptomButtonText();
             return;
           }
           if (status) {
-            updateMainSymptom();
-            symptomButton.current.resetPosition();
+            updateSymptomButtonText();
+            button.resetPosition();
           } else {
             showHint();
-            diseases_refs.current.get(index).playError();
-            symptomButton.current.resetPosition();
+            cards.get(index).playError();
+            button.resetPosition();
           }
           break;
         } else {
-          symptomButton.current.resetPosition();
+          button.resetPosition();
         }
       }
     } catch (error) {
@@ -171,7 +174,10 @@ export default function () {
       <View
         style={styles.footer}
         onLayout={({nativeEvent: {layout}}) => {
-          footer.current = layout.y - 30;
+          const HALF_SYMPTOM_BUTTON_HEIGHT = 30;
+          const POINTER_MARGIN = 20;
+          footer.current =
+            layout.y - HALF_SYMPTOM_BUTTON_HEIGHT + POINTER_MARGIN;
         }}>
         <SymptomCard ref={symptomButton} onDragEnd={dragEventHandler} />
       </View>
