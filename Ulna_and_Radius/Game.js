@@ -5,11 +5,13 @@ import {
   Text,
   useWindowDimensions,
   ToastAndroid,
+  Modal,
 } from 'react-native';
 import Disease from './components/Disease';
 import SymptomCard from './components/SymptomCard';
 import Timer from './components/Timer';
-
+import {data as Database} from './components/database';
+import FinishModal from './components/FinishModal';
 const HEADER_HEIGHT = 50;
 const CARD_HEIGHT = 100;
 const POINTER_MARGIN = 20;
@@ -23,65 +25,37 @@ function shuffle(arr) {
   return arr;
 }
 
-let data = [
-  {
-    id: '1-d',
-    disease: 'فقر الدم',
-    color: '#FBBA22',
-    symptoms: ['فقر دم 1', 'فقر دم 2', 'فقر دم 3'],
-  },
-  {
-    id: '2-d',
-    disease: 'داء مينيير',
-    color: '#EE4445',
-    symptoms: ['منير1', 'منير2', 'منير3'],
-  },
-  {
-    id: '3-d',
-    disease: 'لانظميات',
-    color: '#FA77BC',
-    symptoms: ['نظم1', 'نظم2', 'نظم3'],
-  },
-  {
-    id: '4-d',
-    disease: 'انخفاض سكر الدم',
-    color: '#1BBA5F',
-
-    symptoms: ['سكر1', 'سكر2', 'سكر3', 'سكر4'],
-  },
-  {
-    id: '5-d',
-    disease: 'أمراض القلب الدسامية',
-    color: '#9CFF2E',
-    symptoms: ['قلب1', 'قلب2', 'قلب3'],
-  },
-  {
-    id: '6-d',
-    disease: 'متلازمة كون',
-    color: '#B93160',
-    symptoms: ['كون1', 'كون2', 'كون3'],
-  },
-];
-
-data = shuffle(data);
-let output = data.slice(0, 4);
-data = data.slice(4, data.length);
-
-let indexes = [0, 1, 2, 3];
-indexes = shuffle(indexes);
-let symptoms = output[indexes[0]].symptoms;
-symptoms = shuffle(symptoms);
-let mainSymptom = 'main symptom';
-mainSymptom = symptoms[0] ?? 'main';
-
 export default function () {
   const {width, height} = useWindowDimensions();
-  const [score, setScore] = React.useState(0);
   const diseases_refs = React.useRef(new Map());
   const symptomButton = React.useRef(null);
   const y_coordinates = React.useRef(new Map());
   const excluded_coordinates = React.useRef([]);
   const footer = React.useRef(0);
+  const [finishModal, setFinishModal] = React.useState(false);
+  const data = React.useRef([]);
+  const [loading, setLoading] = React.useState(true);
+
+  //! debug value
+  const [top, setTop] = React.useState(0);
+
+  function getDataOnInit() {
+    let _data = shuffle(Database);
+    let output = _data.slice(0, 4);
+    _data = _data.slice(4, _data.length);
+
+    let indexes = shuffle([0, 1, 2, 3]);
+    let symptoms = shuffle(output[indexes[0]].symptoms);
+    symptomButton?.current?.updateText(symptoms[0]);
+    diseases_refs.current.forEach((item, index) => {
+      item.init(output[index]);
+    });
+    data.current = _data;
+    setLoading(false);
+  }
+  React.useLayoutEffect(() => {
+    getDataOnInit();
+  }, []);
 
   function updateMainSymptom() {
     let temp_symptoms_store = [];
@@ -92,18 +66,13 @@ export default function () {
       temp_symptoms_store.flat().filter(item => item !== undefined),
     );
     if (temp_symptoms_store.length === 0) {
-      mainSymptom = 'done';
-      return symptomButton.current.updateText(mainSymptom);
+      return symptomButton.current.updateText('done');
     }
-    mainSymptom = temp_symptoms_store[0];
-    symptomButton.current.updateText(mainSymptom);
+    symptomButton.current.updateText(temp_symptoms_store[0]);
   }
   function updateDisease(index) {
-    diseases_refs.current
-      .get(index)
-      .update(data[0].disease, data[0].symptoms, data[0].color);
-    output[index] = data[0];
-    data.shift();
+    diseases_refs.current.get(index).init(data.current[0]);
+    data.current = data.current.shift();
   }
   function handleDeadEnd(index) {
     updateMainSymptom();
@@ -113,8 +82,8 @@ export default function () {
   function showHint() {
     for (let i = 0; i < diseases_refs.current.size; i++) {
       const element = diseases_refs.current.get(i).getSymptoms();
-      if (element.includes(mainSymptom)) {
-        diseases_refs.current.get(i).flashRight(output[i].color);
+      if (element.includes(symptomButton.current.getText())) {
+        diseases_refs.current.get(i).flashRight();
         break;
       }
     }
@@ -131,25 +100,27 @@ export default function () {
         const top_border = y_coordinates.current.get(index);
         const pointer_actual_position =
           footer.current - pointer + POINTER_MARGIN;
+        setTop(pointer_actual_position);
+
         if (
           pointer_actual_position >= top_border + HEADER_HEIGHT &&
           pointer_actual_position <= top_border + HEADER_HEIGHT + CARD_HEIGHT
         ) {
-          let status = diseases_refs.current.get(index).check(mainSymptom);
+          let status = diseases_refs.current
+            .get(index)
+            .check(symptomButton.current.getText());
           if (status === 'finished') {
             symptomButton.current.resetPosition();
-            if (data[0] === undefined) {
+            if (data.current[0] === undefined) {
               return handleDeadEnd(index);
             }
             updateDisease(index);
             updateMainSymptom();
-            setScore(prev => (prev += 200));
             return;
           }
           if (status) {
             updateMainSymptom();
             symptomButton.current.resetPosition();
-            setScore(prev => (prev += 50));
           } else {
             showHint();
             diseases_refs.current.get(index).playError();
@@ -161,13 +132,10 @@ export default function () {
         }
       }
     } catch (error) {
-      ToastAndroid.showWithGravity(
-        `Error: ${error.toString()}`,
-        ToastAndroid.LONG,
-        ToastAndroid.TOP,
-      );
+      console.log('ERROR', error);
     }
   }
+
   if (width > height) {
     return (
       <View style={styles.landscape}>
@@ -180,33 +148,22 @@ export default function () {
 
   return (
     <View style={styles.container}>
+      <Modal visible={loading} style={styles.landscape}>
+        <Text style={styles.landscapeText}>loading....</Text>
+      </Modal>
+      <FinishModal visible={false} />
+      <Text onPress={getDataOnInit}>new Game</Text>
       <View style={styles.header}>
-        <Timer
-          targetMinutes={3}
-          onFinish={() =>
-            ToastAndroid.showWithGravity(
-              'Game over',
-              ToastAndroid.LONG,
-              ToastAndroid.CENTER,
-            )
-          }
-        />
-
-        <Text style={styles.point}>
-          <Text style={styles.score}>{score}</Text>نقطة
-        </Text>
+        <Timer targetMinutes={1} onFinish={() => getDataOnInit()} />
       </View>
       <View style={styles.tray}>
-        {output.map((item, index) => {
+        {[0, 1, 2, 4].map((item, index) => {
           return (
             <Disease
-              disease={item.disease}
-              symptoms={item.symptoms}
-              color={item.color}
               index={index}
+              key={item}
               onLayout={y => y_coordinates.current.set(index, y)}
               ref={ref => diseases_refs.current.set(index, ref)}
-              key={item.id}
             />
           );
         })}
@@ -216,11 +173,7 @@ export default function () {
         onLayout={({nativeEvent: {layout}}) => {
           footer.current = layout.y - 30;
         }}>
-        <SymptomCard
-          ref={symptomButton}
-          onDragEnd={dragEventHandler}
-          text={mainSymptom}
-        />
+        <SymptomCard ref={symptomButton} onDragEnd={dragEventHandler} />
       </View>
     </View>
   );
@@ -230,19 +183,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FBF7F4',
-  },
-  score: {
-    fontFamily: 'IBM-bold',
-    color: '#212121',
-    fontSize: 32,
-    fontWeight: 'bold',
-    margin: 8,
-    alignSelf: 'flex-end',
-  },
-  point: {
-    fontFamily: 'IBM-medium',
-    fontSize: 24,
-    color: '#212121',
   },
   footer: {
     height: 50,

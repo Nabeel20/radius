@@ -51,13 +51,12 @@ const Disease = React.forwardRef(
         symptoms_store.current = symptoms_store.current.filter(
           item => item !== selectedSymptom,
         );
+        scale_animation.value = withSequence(withTiming(1.04), withTiming(1));
         setDone(d => (d += 1));
         if (doneCount === symptoms.length - 1) {
           BigSound.play();
           opacity_animation.value = 0;
-          scale_animation.value = 0;
           opacity_animation.value = withTiming(1);
-          scale_animation.value = withTiming(1, {duration: 500});
           return 'finished';
         }
         Success.play();
@@ -101,6 +100,7 @@ const Disease = React.forwardRef(
               [0, -15, 0, 15, 0],
             ),
           },
+          {scale: scale_animation.value},
         ],
       };
     });
