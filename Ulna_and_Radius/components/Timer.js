@@ -37,11 +37,9 @@ export default function Timer({targetMinutes = 0, onFinish = () => {}}) {
 
 const styles = StyleSheet.create({
   text: {
-    fontFamily: 'IBM Plex Sans Arabic',
+    fontFamily: 'IBM-bold',
     fontSize: 32,
-    fontWeight: 'bold',
-    margin: 8,
-    alignSelf: 'flex-end',
+    padding: 8,
     color: '#212121',
   },
 });

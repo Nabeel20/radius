@@ -53,7 +53,7 @@ const Disease = React.forwardRef(
         );
         scale_animation.value = withSequence(withTiming(1.04), withTiming(1));
         setDone(d => (d += 1));
-        if (doneCount === symptoms.length - 1) {
+        if (doneCount === localSymptoms.length - 1) {
           BigSound.play();
           opacity_animation.value = 0;
           opacity_animation.value = withTiming(1);
