@@ -86,7 +86,7 @@ const Disease = React.forwardRef(
       hide() {
         opacity_animation.value = withTiming(0);
       },
-      getNextSymptom() {
+      getCurrentSymptoms() {
         if (symptoms_store.current.length === 0) {
           return undefined;
         }

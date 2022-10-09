@@ -49,7 +49,7 @@ export default function () {
     const button = symptomButton.current;
     let symptoms = [];
     cards.forEach(item => {
-      const ItemSymptoms = item.getNextSymptom();
+      const ItemSymptoms = item.getCurrentSymptoms();
       symptoms.push(ItemSymptoms);
     });
     symptoms = shuffle(symptoms.flat().filter(item => item !== undefined));
