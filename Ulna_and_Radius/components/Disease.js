@@ -57,6 +57,7 @@ const Disease = React.forwardRef(
           BigSound.play();
           opacity_animation.value = 0;
           opacity_animation.value = withTiming(1);
+          symptoms_store.current = [];
           return 'finished';
         }
         Success.play();
@@ -87,13 +88,7 @@ const Disease = React.forwardRef(
         opacity_animation.value = withTiming(0);
       },
       getCurrentSymptoms() {
-        if (symptoms_store.current.length === 0) {
-          return undefined;
-        }
         return symptoms_store.current;
-      },
-      getSymptoms() {
-        return localSymptoms;
       },
     }));
     const container_animation = useAnimatedStyle(() => {
