@@ -51,17 +51,17 @@ export default function () {
       const ItemSymptoms = item.getCurrentSymptoms();
       symptoms.push(ItemSymptoms);
     });
-    symptoms = symptoms.flat().filter(item => item !== undefined);
-    if (shuffle(symptoms).length === 0) {
+    symptoms = shuffle(symptoms.flat());
+    if (symptoms.length === 0) {
       return button.updateText('done');
     }
-    const newSymptom = symptoms[0];
+    const newSymptom = symptoms.at(0);
     button.updateText(newSymptom);
   }
   function newDiseaseCard(index) {
-    const new_disease = data.current[0];
+    const new_disease = data.current.at(0);
     diseases_refs.current.get(index).init(new_disease);
-    data.current = data.current.shift();
+    data.current = data.current.slice(1, data.current.length);
   }
   function handleDeadEnd(index) {
     updateSymptomButtonText();
@@ -72,7 +72,7 @@ export default function () {
     const cards = diseases_refs.current;
     const buttonText = symptomButton.current.getText();
     for (let i = 0; i < cards.size; i++) {
-      const cardSymptoms = cards.get(i).getSymptoms();
+      const cardSymptoms = cards.get(i).getCurrentSymptoms();
       if (cardSymptoms.includes(buttonText)) {
         cards.get(i).flashRight();
         break;
