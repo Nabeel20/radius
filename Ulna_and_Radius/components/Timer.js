@@ -38,7 +38,7 @@ export default function Timer({targetMinutes = 0, onFinish = () => {}}) {
 const styles = StyleSheet.create({
   text: {
     fontFamily: 'IBM-bold',
-    fontSize: 32,
+    fontSize: 24,
     padding: 8,
     color: '#212121',
   },
