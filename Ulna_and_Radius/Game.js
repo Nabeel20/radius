@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Text, useWindowDimensions} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  ToastAndroid,
+} from 'react-native';
 import Disease from './components/Disease';
 import SymptomCard from './components/SymptomCard';
 import Timer from './components/Timer';
@@ -55,11 +61,11 @@ export default function () {
     if (symptoms.length === 0) {
       return button.updateText('done');
     }
-    const newSymptom = symptoms.at(0);
+    const newSymptom = symptoms[0];
     button.updateText(newSymptom);
   }
   function newDiseaseCard(index) {
-    const new_disease = data.current.at(0);
+    const new_disease = data.current[0];
     diseases_refs.current.get(index).init(new_disease);
     data.current = data.current.slice(1, data.current.length);
   }
@@ -124,7 +130,11 @@ export default function () {
         }
       }
     } catch (error) {
-      console.log('ERROR', error);
+      ToastAndroid.showWithGravity(
+        error.toString(),
+        ToastAndroid.CENTER,
+        ToastAndroid.LONG,
+      );
     }
   }
 
